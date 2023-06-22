@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,20 @@ public class ModelController {
     public List<Model> getAllModels()
     {
         return repository.findAll();
+    }
+
+    @GetMapping("test")
+    public String test()
+    {
+        ArrayList<Model> list = (ArrayList<Model>) getAllModels();
+        return list.toString();
+    }
+
+    @GetMapping("/add")
+    public void add()
+    {
+        Model model = new Model();
+        repository.save(model);
     }
 
     @GetMapping("/{id}")
