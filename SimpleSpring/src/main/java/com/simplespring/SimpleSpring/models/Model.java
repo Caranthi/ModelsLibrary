@@ -35,6 +35,26 @@ public class Model {
         this.weight = weight;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public String getFirstAppearance() {
+        return firstAppearance;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
     @Override
     public String toString() {
         return "Model{" +
