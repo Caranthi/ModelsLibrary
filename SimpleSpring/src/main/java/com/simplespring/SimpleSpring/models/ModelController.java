@@ -38,7 +38,7 @@ public class ModelController {
     @GetMapping("/add")
     public void add()
     {
-        Model model = new Model();
+        Model model = new Model("a", "a", "a", 1);
         repository.save(model);
     }
 

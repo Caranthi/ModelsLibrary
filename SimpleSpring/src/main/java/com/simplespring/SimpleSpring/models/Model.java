@@ -15,16 +15,25 @@ public class Model {
     @Column
     private int id;
     @Column // column name the same as filed by default
-    private final String species = "Bowhead whale";
+    private String species = "b";
     @Column
-    private final String colour = "Black";
+    private String colour = "b";
     @Column
-    private final String firstAppearance = "2023-06";
+    private String firstAppearance = "b";
     @Column
-    private final int weight = 300;
+    private int weight = 3;
 
+    public Model()
+    {
+        super();
+    }
 
-
+    public Model(String species, String colour, String firstAppearance, int weight) {
+        this.species = species;
+        this.colour = colour;
+        this.firstAppearance = firstAppearance;
+        this.weight = weight;
+    }
 
     @Override
     public String toString() {
