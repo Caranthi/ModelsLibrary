@@ -1,9 +1,6 @@
 package com.simplespring.SimpleSpring.models;
 
 import jakarta.persistence.*;
-import jdk.jfr.Enabled;
-
-import java.time.LocalDate;
 
 @Entity // entities are objects stored in a database
 @Table(name = "Models") // otherwise the name of the table is the name of the file
@@ -14,7 +11,7 @@ public class Model {
     @GeneratedValue // an id automatically generated
     @Column
     private int id;
-    @Column // column name the same as filed by default
+    @Column // column name the same as field by default
     private String species = "b";
     @Column
     private String colour = "b";
@@ -23,10 +20,9 @@ public class Model {
     @Column
     private int weight = 3;
 
-    public Model()
-    {
+    public Model() {
         super();
-    }
+    } // a default constructor is still needed for some reason
 
     public Model(String species, String colour, String firstAppearance, int weight) {
         this.species = species;
@@ -64,5 +60,21 @@ public class Model {
                 ", firstAppearance=" + firstAppearance +
                 ", weight=" + weight +
                 '}';
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public void setFirstAppearance(String firstAppearance) {
+        this.firstAppearance = firstAppearance;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 }
