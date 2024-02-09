@@ -22,13 +22,6 @@ public class ModelController {
         return repository.findAll();
     }
 
-
-    @GetMapping("/add")
-    public void addModel() {
-        Model model = new Model("a", "a", "a", 1);
-        repository.save(model);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Model> getModelById(@PathVariable(value = "id") Integer ID) {
         Model model = repository.findById(ID).orElseThrow();
@@ -37,14 +30,22 @@ public class ModelController {
 
     @PostMapping("/")
     public Model createModel(@Valid @RequestBody Model model) {
-        return repository.save(model);
+        repository.save(model);
+        return ResponseEntity.ok().body(model).getBody();
     }
 
     @DeleteMapping("/{id}")
     public String deleteModel(@PathVariable(value = "id") Integer Id) {
         Model model = repository.findById(Id).orElseThrow();
         repository.delete(model);
-        return new String("Deleted");
+        return new String("Deleted " + Id);
+    }
+
+    @DeleteMapping("/")
+    public String deleteAll()
+    {
+        repository.deleteAll();
+        return new String("Deleted all models");
     }
 
     @PutMapping("/{id}")
