@@ -42,8 +42,7 @@ public class ModelController {
     }
 
     @DeleteMapping("/")
-    public String deleteAll()
-    {
+    public String deleteAll() {
         repository.deleteAll();
         return new String("Deleted all models");
     }
