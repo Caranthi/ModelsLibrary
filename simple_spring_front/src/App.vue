@@ -1,15 +1,18 @@
 <template>
   <Header/>
+  <Models/>
 </template>
 
 <script>
 
 
 import Header from "@/components/Header.vue";
+import Models from "@/components/Models.vue";
 
 export default {
   name: 'App',
   components: {
+    Models,
     Header
   }
 }
