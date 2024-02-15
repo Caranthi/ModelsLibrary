@@ -5,6 +5,7 @@
       <th>Colour</th>
       <th>First Appearance</th>
       <th>Weight</th>
+      <th>Context action</th>
     </tr>
     <tr v-for="model in models" :key="model.id">
       <td>
@@ -19,9 +20,28 @@
       <td>
         {{ model.weight }}
       </td>
+      <td>
+        <button class="btn btn-secondary" v-on:click="deleteModel(model.id)">DELETE</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="text" placeholder="Species..." v-model="newSpecies">
+      </td>
+      <td>
+        <input type="text" placeholder="Colour..." v-model="newColour">
+      </td>
+      <td>
+        <input type="number" v-model="firstAppearance">
+      </td>
+      <td>
+        <input type="number" v-model="newWeight">
+      </td>
+      <td>
+        <button class="btn btn-primary" v-on:click="add">ADD</button>
+      </td>
     </tr>
   </table>
-  <button class="btn btn-primary">ADD NEW</button>
 </template>
 
 <script>
@@ -33,6 +53,10 @@ export default {
   data() {
     return {
       models: [],
+      newSpecies: '',
+      newColour: '',
+      firstAppearance: 0,
+      newWeight: 0,
     }
   },
   mounted() {
@@ -40,7 +64,25 @@ export default {
       console.log('Models: ', response.data);
       this.models = response.data;
     })
-  }
+  },
+  methods: {
+    deleteModel(id) {
+      axios.delete(`http://192.168.0.75:8080/${id}`).then((response) => {
+        console.log(response.data);
+      }).catch(error => {
+        console.error('ERROR: ', error);
+      });
+    },
+    add() {
+      let modelData = {species: this.newSpecies, colour: this.newColour, firstAppearance: this.firstAppearance, weight: this.newWeight};
+
+      axios.post('http://192.168.0.75:8080/', modelData).then((response) => {
+        console.log('Added model: ', response.data);
+      }).catch(error => {
+        console.error('ERROR: ', error);
+      });
+    }
+  },
 }
 </script>
 
@@ -60,11 +102,11 @@ tr {
   font-size: 23px;
 }
 
-td{
+td {
   border: solid darkturquoise;
 }
 
-button{
-  margin-top: 1%;
+button {
+  font-size: 18px;
 }
 </style>
