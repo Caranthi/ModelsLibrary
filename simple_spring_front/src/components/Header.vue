@@ -21,13 +21,11 @@ export default {
 
 <style scoped>
 div{
-  position: fixed;
   display: flex;
   background-image: url("~@/assets/HeaderImage.jpg");
   background-position: center;
   width: 74%;
   height: 150px;
-  top: 0;
   margin-left: 13%;
 }
 
