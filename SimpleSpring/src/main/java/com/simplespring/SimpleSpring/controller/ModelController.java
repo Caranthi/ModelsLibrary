@@ -25,26 +25,36 @@ public class ModelController {
     @GetMapping("/{id}")
     public ResponseEntity<Model> getModelById(@PathVariable(value = "id") Integer ID) {
         Model model = repository.findById(ID).orElseThrow();
-        return ResponseEntity.ok().body(model); // ResponseEntity - object in a database
+        return ResponseEntity.ok().body(model);
     }
 
     @PostMapping("/")
-    public Model createModel(@Valid @RequestBody Model model) {
+    public ResponseEntity<String> createModel(@Valid @RequestBody Model model) {
+        if (model.getSpecies() == "") {
+            return ResponseEntity.badRequest().body("Species cannot be empty!");
+        }
+        if (model.getColour() == "") {
+            return ResponseEntity.badRequest().body("Colour cannot be empty!");
+        }
+        if (model.getWeight() <= 0) {
+            return ResponseEntity.badRequest().body("Weight must be greater than 0");
+        }
+
         repository.save(model);
-        return ResponseEntity.ok().body(model).getBody();
+        return ResponseEntity.ok().body(model.toString());
     }
 
     @DeleteMapping("/{id}")
-    public String deleteModel(@PathVariable(value = "id") Integer Id) {
+    public ResponseEntity<String> deleteModel(@PathVariable(value = "id") Integer Id) {
         Model model = repository.findById(Id).orElseThrow();
         repository.delete(model);
-        return new String("Deleted " + Id);
+        return ResponseEntity.ok().body("Deleted record " + Id);
     }
 
     @DeleteMapping("/")
-    public String deleteAll() {
+    public ResponseEntity<String> deleteAll() {
         repository.deleteAll();
-        return new String("Deleted all models");
+        return ResponseEntity.ok().body("Deleted all records");
     }
 
     @PutMapping("/{id}")

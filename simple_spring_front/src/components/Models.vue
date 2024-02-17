@@ -4,7 +4,7 @@
       <th>Species</th>
       <th>Colour</th>
       <th>First Appearance</th>
-      <th>Weight</th>
+      <th>Weight [g]</th>
       <th>Context action</th>
     </tr>
     <tr v-for="model in models" :key="model.id">
@@ -63,12 +63,17 @@ export default {
     axios.get('http://192.168.0.75:8080/').then((response) => {
       console.log('Models: ', response.data);
       this.models = response.data;
-    })
+    });
   },
   methods: {
     deleteModel(id) {
       axios.delete(`http://192.168.0.75:8080/${id}`).then((response) => {
         console.log(response.data);
+
+        axios.get('http://192.168.0.75:8080/').then((response) => {
+          console.log('Models: ', response.data);
+          this.models = response.data;
+        });
       }).catch(error => {
         console.error('ERROR: ', error);
       });
@@ -78,6 +83,11 @@ export default {
 
       axios.post('http://192.168.0.75:8080/', modelData).then((response) => {
         console.log('Added model: ', response.data);
+
+        axios.get('http://192.168.0.75:8080/').then((response) => {
+          console.log('Models: ', response.data);
+          this.models = response.data;
+        });
       }).catch(error => {
         console.error('ERROR: ', error);
       });
