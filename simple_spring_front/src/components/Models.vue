@@ -76,6 +76,8 @@ export default {
         });
       }).catch(error => {
         console.error('ERROR: ', error);
+
+        this.emitter.emit('error', {error: error.response.data});
       });
     },
     add() {
@@ -90,6 +92,8 @@ export default {
         });
       }).catch(error => {
         console.error('ERROR: ', error);
+
+        this.emitter.emit('error', {error: error.response.data});
       });
     }
   },

@@ -1,6 +1,7 @@
 <template>
   <Header/>
   <Models/>
+  <ErrorForm/>
 </template>
 
 <script>
@@ -8,10 +9,12 @@
 
 import Header from "@/components/Header.vue";
 import Models from "@/components/Models.vue";
+import ErrorForm from "@/components/ErrorForm.vue";
 
 export default {
   name: 'App',
   components: {
+    ErrorForm,
     Models,
     Header
   }
