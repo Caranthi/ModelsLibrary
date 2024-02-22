@@ -46,12 +46,15 @@
 
 <script>
 import axios from 'axios'
+import {_} from 'vue-underscore'
 
+let s = require("underscore.string");
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Models",
   data() {
     return {
+      initialModels: [],
       models: [],
       newSpecies: '',
       newColour: '',
@@ -62,7 +65,22 @@ export default {
   mounted() {
     axios.get('http://192.168.0.75:8080/').then((response) => {
       console.log('Models: ', response.data);
-      this.models = response.data;
+      this.initialModels = response.data;
+      this.models = this.initialModels;
+    });
+
+    this.emitter.on('filter', (data) =>
+    {
+      let species = data.species.toUpperCase();
+
+      this.models = _.filter(this.initialModels, function (model)
+      {
+        let currentSpecies = model.species.toUpperCase();
+        if(s.include(currentSpecies, species))
+        {
+          return model;
+        }
+      })
     });
   },
   methods: {
@@ -95,6 +113,11 @@ export default {
 
         this.emitter.emit('error', {error: error.response.data});
       });
+
+      this.newSpecies = '';
+      this.newColour = '';
+      this.firstAppearance = 0;
+      this.newWeight = 0;
     }
   },
 }

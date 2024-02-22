@@ -1,26 +1,36 @@
 <template>
-<div>
-  <p @click="onTitleClick">Models Library</p>
-  <input type="text" placeholder="Type model species...">
-</div>
+  <div>
+    <p @click="onTitleClick">Models Library</p>
+    <input type="text" placeholder="Type model species..." v-model="species" @input="onInput">
+  </div>
 </template>
 
 <script>
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Header",
+  data() {
+    return {
+      species: '',
+    }
+  },
   methods:
       {
-        onTitleClick()
-        {
+        onTitleClick() {
           window.location.reload();
+        },
+        onInput() {
+          this.emitter.emit('filter', {species: this.species});
         }
       },
+  mounted() {
+
+  },
 }
 </script>
 
 <style scoped>
-div{
+div {
   display: flex;
   background-image: url("~@/assets/HeaderImage.jpg");
   background-position: center;
@@ -29,7 +39,7 @@ div{
   margin-left: 13%;
 }
 
-p{
+p {
   font-size: 42px;
   margin-top: 8%;
   margin-left: 3%;
@@ -37,7 +47,7 @@ p{
   cursor: pointer;
 }
 
-input{
+input {
   height: 35%;
   margin-top: 8%;
   font-size: 30px;
