@@ -8,7 +8,7 @@
       <th>Context action</th>
     </tr>
     <tr v-for="model in models" :key="model.id">
-      <td>
+      <td @click="browseWikipedia(model.species)" id="hyperlink">
         {{ model.species }}
       </td>
       <td>
@@ -118,6 +118,11 @@ export default {
       this.newColour = '';
       this.firstAppearance = 0;
       this.newWeight = 0;
+    },
+    browseWikipedia(text)
+    {
+      const searchURL = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(text)}`;
+      window.open(searchURL, '_blank');
     }
   },
 }
@@ -145,5 +150,10 @@ td {
 
 button {
   font-size: 18px;
+}
+
+#hyperlink{
+  cursor: pointer;
+  color: blue;
 }
 </style>
