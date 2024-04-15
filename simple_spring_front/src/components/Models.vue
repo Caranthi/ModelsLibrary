@@ -7,7 +7,7 @@
       <th>Weight [g]</th>
       <th>Context action</th>
     </tr>
-    <tr v-for="model in models" :key="model.id">
+    <tr v-for="model in currentModels" :key="model.id">
       <td @click="browseWikipedia(model.species)" id="hyperlink">
         {{ model.species }}
       </td>
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       initialModels: [],
-      models: [],
+      currentModels: [],
       newSpecies: '',
       newColour: '',
       firstAppearance: 0,
@@ -66,18 +66,15 @@ export default {
     axios.get('http://192.168.0.75:8080/').then((response) => {
       console.log('Models: ', response.data);
       this.initialModels = response.data;
-      this.models = this.initialModels;
+      this.currentModels = this.initialModels;
     });
 
-    this.emitter.on('filter', (data) =>
-    {
+    this.emitter.on('filter', (data) => {
       let species = data.species.toUpperCase();
 
-      this.models = _.filter(this.initialModels, function (model)
-      {
+      this.currentModels = _.filter(this.initialModels, function (model) {
         let currentSpecies = model.species.toUpperCase();
-        if(s.include(currentSpecies, species))
-        {
+        if (s.include(currentSpecies, species)) {
           return model;
         }
       })
@@ -90,7 +87,7 @@ export default {
 
         axios.get('http://192.168.0.75:8080/').then((response) => {
           console.log('Models: ', response.data);
-          this.models = response.data;
+          this.currentModels = response.data;
         });
       }).catch(error => {
         console.error('ERROR: ', error);
@@ -106,7 +103,7 @@ export default {
 
         axios.get('http://192.168.0.75:8080/').then((response) => {
           console.log('Models: ', response.data);
-          this.models = response.data;
+          this.currentModels = response.data;
         });
       }).catch(error => {
         console.error('ERROR: ', error);
@@ -119,11 +116,10 @@ export default {
       this.firstAppearance = 0;
       this.newWeight = 0;
     },
-    browseWikipedia(text)
-    {
-      const searchURL = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(text)}`;
+    browseWikipedia(species) {
+      const searchURL = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(species)}`;
       window.open(searchURL, '_blank');
-    }
+    },
   },
 }
 </script>
@@ -152,7 +148,7 @@ button {
   font-size: 18px;
 }
 
-#hyperlink{
+#hyperlink {
   cursor: pointer;
   color: blue;
 }

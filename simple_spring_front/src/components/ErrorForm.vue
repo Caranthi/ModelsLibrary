@@ -1,8 +1,6 @@
 <template>
-  <div class="container" v-if="this.isShown" v-on:click="closeError">
-    <div class="alert alert-danger" role="alert" style="display: flex; justify-content: center">
-      <strong/> {{ this.error }}
-    </div>
+  <div class="alert alert-danger" v-if="this.isShown" v-on:click="closeError">
+    <strong/> {{ this.error }}
   </div>
 </template>
 
@@ -34,18 +32,12 @@ export default {
 div {
   display: flex;
   position: fixed;
-  width: 75%;
-  height: 75%;
-  top: 25%;
-  left: 25%;
-}
-
-.alert {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 50%;
   height: 50%;
+  top: 25%;
+  left: 25%;
+  justify-content: center;
+  align-items: center;
   font-size: 500%;
   background-color: rgba(255, 0, 0, 0.8);
 }

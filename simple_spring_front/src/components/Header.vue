@@ -23,9 +23,6 @@ export default {
           this.emitter.emit('filter', {species: this.species});
         }
       },
-  mounted() {
-
-  },
 }
 </script>
 
