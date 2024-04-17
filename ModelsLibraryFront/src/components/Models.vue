@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://192.168.0.75:8080/').then((response) => {
+    axios.get('http://localhost:8080/').then((response) => {
       console.log('Models: ', response.data);
       this.initialModels = response.data;
       this.currentModels = this.initialModels;
@@ -82,10 +82,10 @@ export default {
   },
   methods: {
     deleteModel(id) {
-      axios.delete(`http://192.168.0.75:8080/${id}`).then((response) => {
+      axios.delete(`http://localhost:8080/${id}`).then((response) => {
         console.log(response.data);
 
-        axios.get('http://192.168.0.75:8080/').then((response) => {
+        axios.get('http://localhost:8080/').then((response) => {
           console.log('Models: ', response.data);
           this.currentModels = response.data;
         });
@@ -98,10 +98,10 @@ export default {
     add() {
       let modelData = {species: this.newSpecies, colour: this.newColour, firstAppearance: this.firstAppearance, weight: this.newWeight};
 
-      axios.post('http://192.168.0.75:8080/', modelData).then((response) => {
+      axios.post('http://localhost:8080/', modelData).then((response) => {
         console.log('Added model: ', response.data);
 
-        axios.get('http://192.168.0.75:8080/').then((response) => {
+        axios.get('http://localhost:8080/').then((response) => {
           console.log('Models: ', response.data);
           this.currentModels = response.data;
         });
