@@ -60,33 +60,39 @@ export default {
       newColour: '',
       firstAppearance: 0,
       newWeight: 0,
+      initialSpecies: ['Blue Whale', 'Tiger Shark', 'Bull Shark'],
+      initialColours: ['blue', 'green', 'blue'],
+      initialAppearances: [2021, 2021, 2022],
+      initialWeights: [182, 86, 64],
     }
   },
   mounted() {
-    axios.get('http://localhost:8080/').then((response) => {
+    axios.get('http://localhost:8080/').then(async (response) => {
       console.log('Models: ', response.data);
       this.initialModels = response.data;
+
       if (this.initialModels.length === 0) {
-        this.initialModels = [{
-          'id': 0,
-          'species': 'Blue Whale',
-          'colour': 'blue',
-          'firstAppearance': 2021,
-          'weight': 186
-        }, {
-          'id': 1,
-          'species': 'Tiger Shark',
-          'colour': 'green',
-          'firstAppearance': 2021,
-          'weight': 78
-        }, {
-          'id': 2,
-          'species': 'Bull Shark',
-          'colour': 'blue',
-          'firstAppearance': 2022,
-          'weight': 64
-        }];
+        for (let i = 0; i < this.initialSpecies.length; i++) {
+          let modelData = {
+            species: this.initialSpecies[i], colour: this.initialColours[i], firstAppearance: this.initialAppearances[i],
+            weight: this.initialWeights[i]
+          };
+
+          await axios.post('http://localhost:8080/', modelData).then((response) => {
+            console.log('Added model: ', response.data);
+          }).catch(error => {
+            console.error('ERROR: ', error);
+
+            this.emitter.emit('error', {error: error.response.data});
+          });
+        }
+        axios.get('http://localhost:8080/').then((response) => {
+          console.log('Initial Models: ', response.data);
+          this.initialModels = response.data;
+          this.currentModels = this.initialModels;
+        });
       }
+
       this.currentModels = this.initialModels;
     });
 
