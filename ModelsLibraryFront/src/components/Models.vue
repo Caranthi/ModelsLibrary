@@ -66,6 +66,27 @@ export default {
     axios.get('http://localhost:8080/').then((response) => {
       console.log('Models: ', response.data);
       this.initialModels = response.data;
+      if (this.initialModels.length === 0) {
+        this.initialModels = [{
+          'id': 0,
+          'species': 'Blue Whale',
+          'colour': 'blue',
+          'firstAppearance': 2021,
+          'weight': 186
+        }, {
+          'id': 1,
+          'species': 'Tiger Shark',
+          'colour': 'green',
+          'firstAppearance': 2021,
+          'weight': 78
+        }, {
+          'id': 2,
+          'species': 'Bull Shark',
+          'colour': 'blue',
+          'firstAppearance': 2022,
+          'weight': 64
+        }];
+      }
       this.currentModels = this.initialModels;
     });
 
